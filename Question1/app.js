@@ -3,9 +3,9 @@ const bodyParser = require("body-parser");
 const path = require("path");
 
 const app = express();
-// app.use(express.json());
+app.use(express.json());
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+// app.use(bodyParser.urlencoded({ extended: true }));
 const port = 3000;
 
 app.set("view engine", "ejs");
@@ -24,9 +24,13 @@ app.get("/signin", (req, res) => {
 });
 
 app.post("/signup", (req, res) => {
-  console.log(req.body);
-  console.log(req.files);
+  console.log("body", req.body);
+  console.log("files", req.file);
   res.send("hi");
+});
+
+app.use("*", (req, res) => {
+  res.render("404");
 });
 
 app.listen(port, () =>

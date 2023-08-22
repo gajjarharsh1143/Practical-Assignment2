@@ -92,25 +92,26 @@
     integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz"
     crossorigin="anonymous"></script>
 <script>
-    $(document).ready(() => {
-        $(document).on('click', '#signup', () => {
-            $.ajax({
-                url: "/signup",
-                method: "POST",
-                processData: false,
-                // contentType: false,
-                // enctype: 'multipart/form-data',
-                data: {
-                    file1: new FormData("file1", ('#profile').prop('files')),
-                    email: $('#email').val(),
-                    password: $('#setpwd').val(),
-                },
-                success: (data) => {
-                    console.log(data);
-                }
-            })
-        })
-    })
+    $(document).on('click', '#signup', () => {
+        let formData = new FormData(); // Create a FormData object to hold both files and data
+        formData.append('file1', $('#profile')[0].files[0]); // Append the file to the FormData
+        formData.append('email', $('#email').val()); // Append other data fields
+        formData.append('password', $('#setpwd').val());
+
+        console.log(formData);
+
+        $.ajax({
+            url: "/signup",
+            method: "POST",
+            processData: false,
+            contentType: false, // Set contentType to false when sending FormData
+            data: formData, // Use the FormData object
+            success: (data) => {
+                alert(data);
+            }
+        });
+    });
+
 </script>
 
 </html>
